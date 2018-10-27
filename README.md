@@ -58,9 +58,33 @@ quay.io credentials:
 In that case, the pipeline would create an image repository called `tasks-app` (default name but configurable) 
 on your Quay.io account and use that instead of the integrated OpenShift 
 registry, for pushing the built images and also pulling images for deployment. 
-  
+
+## Local OKD Origin
+
+Download and install [Minishift](https://docs.okd.io/latest/minishift/getting-started/installing.html)
+Start up an OpenShift cluster:
+
+```
+minishift addons enable xpaas
+minishift start --memory=10240 --vm-driver=virtualbox
+oc login -u developer
+```
+
+Pre-pull the images to make sure the deployments go faster:
+
+```
+minishift ssh docker pull openshiftdemos/gogs:0.11.34
+minishift ssh docker pull openshiftdemos/sonarqube:7.0
+minishift ssh docker pull sonatype/nexus3:3.13.0
+minishift ssh docker pull openshift/wildfly-120-centos7
+```
+
+
+
 ## Manual Deploy on OpenShift
 Follow these [instructions](docs/local-cluster.md) in order to create a local OpenShift cluster. Otherwise using your current OpenShift cluster, create the following projects for CI/CD components, Dev and Stage environments:
+
+
 
   ```shell
   # Create Projects
