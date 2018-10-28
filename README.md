@@ -73,10 +73,15 @@ oc login -u developer
 Pre-pull the images to make sure the deployments go faster:
 
 ```
-minishift ssh docker pull openshiftdemos/gogs:0.11.34
-minishift ssh docker pull openshiftdemos/sonarqube:7.0
-minishift ssh docker pull sonatype/nexus3:3.13.0
-minishift ssh docker pull openshift/wildfly-120-centos7
+wget http://mirror.centos.org/centos/7/os/x86_64/Packages/python-rhsm-certificates-1.19.10-1.el7_4.x86_64.rpm
+
+rpm2cpio python-rhsm-certificates-1.19.10-1.el7_4.x86_64.rpm | cpio -iv --to-stdout ./etc/rhsm/ca/redhat-uep.pem | tee /etc/rhsm/ca/redhat-uep.pem
+
+docker pull registry.access.redhat.com/openshift3/jenkins-agent-maven-35-rhel7
+docker pull openshiftdemos/gogs:0.11.34
+docker pull openshiftdemos/sonarqube:7.0
+docker pull sonatype/nexus3:3.13.0
+docker pull openshift/wildfly-120-centos7
 ```
 
 
